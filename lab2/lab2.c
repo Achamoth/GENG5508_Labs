@@ -91,6 +91,34 @@ void splineDrive(int x, int y, int alpha) {
     fclose(fout);
 }
 
+//Drive between waypoints using spline curves
+void waypointsSpline() {
+    //Waypoints array
+    int x[100];
+    int y[100];
+    int i=0;
+
+    //Read waypoints file
+    FILE *fp = fopen("way.txt","r");
+    char str[100];
+    while(fgets(str, 60, fp) != NULL) {
+        int wpx, wpy;
+        sscanf(str, "%d %d", &wpx, &wpy);
+        x[i] = wpx;
+        y[i++] = wpy;
+    }
+    //Close file
+    fclose(fp);
+
+    //Move between points
+    while(true) {
+        for(int j=0; j<=i; j++) {
+            //Move to current waypoint using spline drive
+            splineDrive(x[j],y[j],30);
+        }
+    }
+}
+
 //Drive between waypoints specified in "way.txt" text file. A bad drive method that just drives lines between each successive waypoint, rather than spline curves
 void waypoints() {
     //Waypoints array
@@ -134,34 +162,6 @@ void waypoints() {
             VWStraight(mag, 50);
             while(!VWDone()) {
             }
-        }
-    }
-}
-
-//Drive between waypoints using spline curves
-void waypointsSpline() {
-    //Waypoints array
-    int x[100];
-    int y[100];
-    int i=0;
-
-    //Read waypoints file
-    FILE *fp = fopen("way.txt","r");
-    char str[100];
-    while(fgets(str, 60, fp) != NULL) {
-        int wpx, wpy;
-        sscanf(str, "%d %d", &wpx, &wpy);
-        x[i] = wpx;
-        y[i++] = wpy;
-    }
-    //Close file
-    fclose(fp);
-
-    //Move between points
-    while(true) {
-        for(int j=0; j<=i; j++) {
-            //Move to current waypoint using spline drive
-            splineDrive(x[j],y[j],30);
         }
     }
 }
