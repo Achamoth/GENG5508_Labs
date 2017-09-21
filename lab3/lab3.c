@@ -4,8 +4,8 @@
 #include "eyebot.h"
 
 //Set target position as globals
-int TARG_X = 5500;
-int TARG_Y = 5500;
+int TARG_X = 3500;
+int TARG_Y = 3500;
 
 //Converts degrees to radians
 double toRadian(double deg) {
@@ -168,7 +168,7 @@ int main() {
         while(!VWDone()){};
 
         //Drive towards goal until 200mm away from obstacle
-        reachWall(250);
+        reachWall(200);
 
         //Align with obstacle
         rotateUntilParallel();
@@ -184,6 +184,7 @@ int main() {
     }
 
     //Turn towards target
+    printf("Turning %d degrees to the right\n", angleToTarget());
     VWTurn(-angleToTarget(), 30);
     while(!VWDone()) {};
 
@@ -191,6 +192,7 @@ int main() {
     int x, y, phi;
     VWGetPosition(&x, &y, &phi);
     int distToTarget = (int)sqrt(pow(abs(TARG_X-x),2) + pow(abs(-1*TARG_Y-y),2));
+    printf("Driving %d mm to target\n", distToTarget);
     VWStraight(distToTarget, 100);
     while(!VWDone()) {};
 
