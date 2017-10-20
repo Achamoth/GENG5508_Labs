@@ -1,3 +1,7 @@
+//GENG5508, Semester 2, 2017
+//Lab 7, Maze Navigation and Mapping
+//Ammar Abu Shamleh & Zen Ly
+
 #include "eyebot.h"
 #include <stdio.h>
 #include <stdlib.h>
